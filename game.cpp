@@ -42,7 +42,7 @@ struct Board {
         this->sprite.setTexture(texture);
         setSize(this->sprite, nc * step, nl * step);
         this->sprite.setPosition(0, 0);
-        this->rect.setSize(sf::Vector2f(step, step));
+        this->rect.setSize(sf::Vector2f(step/2, step/2));
         this->rect.setFillColor(sf::Color::Transparent);
         this->rect.setOutlineColor(sf::Color::Black);
         this->rect.setOutlineThickness(2);
@@ -50,9 +50,9 @@ struct Board {
 
     void draw(sf::RenderWindow& window) {
         window.draw(this->sprite);
-        for (int i = 0; i < nc; i++) {
-            for (int j = 0; j < nl; j++) {
-                rect.setPosition(i * step, j * step);
+        for (int i = 0; i < nc*2; i++) {
+            for (int j = 0; j < nl*2; j++) {
+                rect.setPosition(i * step/2, j * step/2);
                 window.draw(rect);
             }
         }
@@ -83,15 +83,15 @@ int main() {
 
     sf::Texture wolf_tex {loadTexture("lobol.png")};
     sf::Texture rabbit_tex {loadTexture("coelho.png")};
-    sf::Texture grass_tex {loadTexture("grama.jpg")};
+    sf::Texture grass_tex {loadTexture("SecretWoods.png")};
 
-    const int STEP {100};
+    const int STEP {25};
 
     Entity wolf(1, 1, STEP, wolf_tex);
     Entity rabbit(3, 3, STEP, rabbit_tex);
-    Board board(7, 5, STEP, grass_tex);
+    Board board(14, 8, STEP * 2, grass_tex);
 
-    sf::RenderWindow window(sf::VideoMode(board.nc * STEP, board.nl * STEP), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(board.nc * STEP * 2, board.nl * STEP * 2), "SFML works!");
 
     while (window.isOpen()) {
         sf::Event event;
